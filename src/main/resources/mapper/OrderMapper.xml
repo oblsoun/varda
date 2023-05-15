@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.msa.varda.dao.IOrderRepository">
+ 
+ 	<!-- OdNum(주문번호) 최대값 불러오기 -->
+	 <select id="selectMaxOdNum" resultType="int">
+	  <![CDATA[
+	 		SELECT IF(OD_NUM=NULL,'0',MAX(OD_NUM))
+	 		FROM ORDERMASTER
+	 ]]>
+	 </select>
+	 
+	 <!-- OrderDetail테이블에 값 입력하기 -->
+	 <insert id="setOrderDetail" parameterType="com.msa.varda.model.OrderDetailVO">
+	 <![CDATA[
+	 		INSERT INTO
+	 			OrderDetailVO(odNum,odOrder,pdId,odPrice)
+	 		VALUES
+	 			(#{odNum},#{odOrder},#{pdId},#{odPrice})
+	 ]]>
+	 </insert>
+	 
+	 
+	 <!-- OrderDetail 테이블에 있는 ODPRICE 합계 구하기  -->
+	 <select id="getSumOdPrice" parameterType="com.msa.varda.model.OrderDetailVO" resultType="int">
+	  <![CDATA[
+	 		SELECT SUM(OD_PRICE)
+	 		FROM ORDERDETAIL
+	 		WHERE OD_NUM = #{odNum}
+	 ]]>
+	 </select>
+	 
+	 
+	  <!-- OrderMaster테이블에 값 입력하기  -->
+	 <insert id="setOrderMaster" parameterType="com.msa.varda.model.OrderMasterVO">
+	 <![CDATA[
+	 		INSERT INTO
+	 			OrderDetailVO(odNum,cId,odSum,odDate,odAdd,odPhone)
+	 		VALUES
+	 			(#{odNum},#{cId},#{odSum},#{odDate},#{odAdd},#{odPhone})
+	 ]]>
+	 </insert>
+	 
+	 <!-- 주문한 상품은 장바구니에서 지워주기 -->
+	 <delete id="deleteOrderPd" parameterType="com.msa.varda.model.OrderMasterVO">
+	  <![CDATA[
+	 	DELETE * FROM CART
+		WHERE CART.C_ID = #{sessionId}
+			 AND
+			 CART.PD_ID =#{pdId}
+	 
+	 ]]>
+	 </delete>
+	 
+	 <!-- 지정한 고객이 주문한 상품목록 조회하기 -->
+	 <select id="getOrderList" parameterType="com.msa.varda.model.OrderMasterVO">
+	 <![CDATA[
+	 		SELECT * 
+	 		FROM ORDERDETAIL
+	 		WHERT OD_NUM = (SELECT OD_NUM
+	 							FROM ORDERMASTER
+	 							WHERE C_ID = #{sessionId})
+	 ]]>
+	 </select>
+	 
+ </mapper>

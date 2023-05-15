@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.msa.varda.dao.ICustomerRepository">
+
+	<insert id="joinCustomer" parameterType="com.msa.varda.model.CustomerVO">
+	<![CDATA[
+		INSERT INTO
+			CustomerVO(cId,cName,cPwd,cPhone1, cPhone2, cPhone3,cEmail1, cEmail2,postcode,address,detailAdd,extraAdd)
+		VALUES
+			(#{cId}, #{cName}, #{cPwd}, #{cPhone1}, #{cPhone2}, #{cPhone3}, #{cEmail1}, #{cEmail2}, #{cEmail2}, #{postcode}, #{address}, #{detailAdd}, #{extraAdd})
+	]]>
+	</insert>
+	
+	<update id="updateCustomer" parameterType="com.msa.varda.model.CustomerVO">
+	<![CDATA[
+		UPDATE 
+			CustomerVO
+		SET
+			cName=#{cName}, pwd=#{cPwd}, cPhone1=#{cPhone1}, cPhone2=#{cPhone2}, cPhone3=#{cPhone3},
+			cEmail1=#{cEmail1}, cEmail2=#{cEmail2}, postcode=#{postcode}, address=#{address}, detailAdd=#{detailAdd}, extraAdd=#{extraAdd}
+		WHERE
+			cId=#{cId}
+	]]>
+	</update>
+	
+	<select id="getcPwd" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT
+			cPwd
+		FROM
+			CustomerVO
+		WHERE cId =#{cId}
+	]]>
+	</select>
+	
+	<select id="select" parameterType="string" resultType="com.msa.varda.model.CustomerVO">
+	<![CDATA[
+		SELECT
+			cId, cName, cPwd, cPhone1, cPhone2, cPhone3, cEmail1, cEmail2, postcode, address, detailAdd, extraAdd
+		FROM
+			CustomerVO
+		WHERE 
+			cId=#{cId}
+	]]>
+	</select>
+	
+	<select id="selectAll" resultType="com.msa.varda.model.CustomerVO">
+	<![CDATA[
+		SELECT
+			cId, cName, cPwd, cPhone1, cPhone2, cPhone3, cEmail1, cEmail2, postcode, address, detailAdd, extraAdd
+		FROM
+			CustomerVO
+	]]>
+	</select>
+	
+</mapper>

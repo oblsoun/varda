@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.msa.varda.dao.IProductRepository">
+  
+   	<!-- categoryNum에 해당하는 상품리스트 값 조회하기 -->
+	 <select id="getProductList" parameterType="int" resultType="com.msa.varda.model.ProductVO">
+	  <![CDATA[
+	 		SELECT *
+	 		FROM PRODUCT
+	 		WHERE	(CASE WHEN 1<=${categoryNum} and ${categoryNum} <3 THEN SUBSTRING(PD_ID,2,1)=${categoryNum}
+	 					  WHEN 3<=${categoryNum} and ${categoryNum} <6 THEN SUBSTRING(PD_ID,3,1)=${categoryNum}-2
+	 					  WHEN 6<=${categoryNum} and ${categoryNum} <12 THEN SUBSTRING(PD_ID,4,1)=${categoryNum}-5
+	 				)				
+	 ]]>
+	 </select>
+	 
+	 <!-- pdId 해당하는 상품리스트 값 조회하기 -->
+	 <select id="getProductInfo" parameterType="String" resultType="com.msa.varda.model.ProductVO">
+	  <![CDATA[
+	 		SELECT *
+	 		FROM PRODUCT
+	 		WHERE PD_ID=${pdId}		
+	 ]]>
+	 </select>
+	
+	 	 
+	 <!-- 새로운 상품 등록하기 -->
+	 <insert id="insertProduct" parameterType="com.msa.varda.model.ProductVO">
+	<![CDATA[
+		INSERT INTO 
+			PRODUCT (PD_ID, PD_NAME, PD_IMG, PD_SUBIMG, PD_PRICE, PD_TAG, PD_DESCRIP) 
+		VALUES 
+			(#{pdId}, #{pdName}, #{pdImg}, #{pdSubImg}, #{pdPrice}, #{pdTag}, #{pdDescrip})
+	]]>
+	 </insert>
+	 
+	 <!-- 상품 아이디를 만들기 위한 상품등록순번 최곳값 구하기 -->
+	 	 <select id="makeProductId" resultType="int">
+	  <![CDATA[
+	 		SELECT COUNT(*) 
+	 		FROM PRODUCT
+	 ]]>
+	 </select>
+	 
+
+ 
+
+	 
+ </mapper>

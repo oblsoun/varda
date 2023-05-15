@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.msa.varda.dao.IReviewMapper"> <!-- 인터페이스Mapper, 자바파일 -->
+<!-- <insert id="getReviewList" parameterType="com.msa.varda.model.ReviewVO"> -->
+<!-- insert into  -->
+
+  
+<!-- 테이블 전체 컬럼 -->
+<sql id="postColumns">
+ 				rv_Id
+				,c_Id
+				,content
+				,apply_Score
+				,stimulation_Score
+				,satisfaction_Score
+				,write_Date
+</sql>
+
+<!-- 게시글 저장 -->
+<insert id="save" parameterType="com.msa.varda.model.ReviewVO">
+	INSERT INTO review (
+		<include refid="postColumns" />
+	) VALUES (
+				#{rvId}
+				,#{cId}
+				,#{content}
+				,#{applyScore}
+				,#{stimulationScore}
+				,#{satisfactionScore}
+				,#{writeDate}
+	)
+</insert>
+<!-- 테이블에 값 넣어 행 추가 -->
+<!--  <select id="save"> -->
+<!--         INSERT INTO review (rv_Id, c_Id, content, apply_Score,  -->
+<!--                             stimulation_Score, satisfaction_Score, write_Date) -->
+<!--             values (#{rvId}, #{cId}, #{content}, #{applyScore}, #{satisfactionScore}, #{writeDate}) -->
+<!--     </select> -->
+<!-- 해당 상품에 대한 리뷰 리스트 조회하기 -->
+<!--   <select id="getReviewList" resultType="com.msa.varda.model.ReviewVO"> -->
+<!--         SELECT * FROM review ORDER BY rv_Id DESC</select> -->
+    
+	<select id="getReviewList" resultType="com.msa.varda.model.ReviewVO">
+		SELECT
+			<include refid="postColumns" />
+		FROM 
+			review
+		ORDER BY
+			rv_Id DESC
+	</select>
+	
+	<!-- //리뷰 작성할때 구매한 상품 이미지, 상품명 갖고오기 -->
+	
+	<!-- //점수 계산하기 -->
+	<!-- //글쓰기 -->
+	<!-- //해당 상품에 대한 리뷰 리스트 조회하기 -->
+	
+<!-- 	void getPdInfo(); //리뷰 작성할때 구매한 상품 이미지, 상품명 갖고오기 -->
+<!-- 	   void scoreReview(ReviewVO reviewVO); //라디오 버튼 점수 계산하기 -->
+<!-- 	   void writeReview(ReviewVO reviewVO); //전체적인 후기 글쓰기 -->
+<!-- 	   List<ReviewVO> getReviewList(String pdId); //해당 상품에 대한 리뷰 리스트 조회하기 -->
+	
+	
+	
+<!-- resultType : 한개에 대한 데이터 타입이 ReviewVO -->
+
+
+	
+<!-- 	<update id="updateCustomer" parameterType="com.msa.varda.model.CustomerVO"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		UPDATE  -->
+<!-- 			CustomerVO -->
+<!-- 		SET -->
+<!-- 			cName=#{cName}, pwd=#{cPwd}, cPhone1=#{cPhone1}, cPhone2=#{cPhone2}, cPhone3=#{cPhone3}, -->
+<!-- 			cEmail1=#{cEmail1}, cEmail2=#{cEmail2}, postcode=#{postcode}, address=#{address}, detailAdd=#{detailAdd}, extraAdd=#{extraAdd} -->
+<!-- 		WHERE -->
+<!-- 			cId=#{cId} -->
+<!-- 	]]> -->
+<!-- 	</update> -->
+	
+<!-- 	<select id="getcPwd" parameterType="string" resultType="string"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		SELECT -->
+<!-- 			cPwd -->
+<!-- 		FROM -->
+<!-- 			CustomerVO -->
+<!-- 		WHERE cId =#{cId} -->
+<!-- 	]]> -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="select" parameterType="string" resultType="com.msa.varda.model.Customer"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		SELECT -->
+<!-- 			cId, cName, cPwd, cPhone1, cPhone2, cPhone3, cEmail1, cEmail2, postcode, address, detailAdd, extraAdd -->
+<!-- 		FROM -->
+<!-- 			CustomerVO -->
+<!-- 		WHERE  -->
+<!-- 			cId=#{cId} -->
+<!-- 	]]> -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="selectAll" resultType="com.msa.varda.model.CustomerVO"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		SELECT -->
+<!-- 			cId, cName, cPwd, cPhone1, cPhone2, cPhone3, cEmail1, cEmail2, postcode, address, detailAdd, extraAdd -->
+<!-- 		FROM -->
+<!-- 			CustomerVO -->
+<!-- 	]]> -->
+<!-- 	</select> -->
+	
+</mapper>

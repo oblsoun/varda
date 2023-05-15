@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="com.msa.varda.dao.ICartRepository">
+
+	<select id="getCartList" parameterType="String" resultType="com.msa.varda.model.CartVO">
+		select *
+		from cart c, product p
+		where (c.c_id = ${sessionId}) and (p.pd_id = c.pd_id)
+		
+		<!-- Select *
+			 From cart c, product p
+			 where (c.c_id = ${sessionId}) and (p.pd_id = c.pd_id)-->
+	</select>
+	<!-- 장바구니에 담기 -->
+    <insert id="addCart">
+        insert into cart (c_id, pd_id, pd_price)
+        values (#{c_id}, #{pd_id}, #{pd_price} )
+    </insert>
+    <!-- 장바구니 삭제 -->
+    <delete id="deleteCart">
+    	delete from cart
+    	where c_id=#{sessionId}
+    </delete>
+</mapper>
