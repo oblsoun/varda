@@ -1,6 +1,13 @@
 # :shopping_cart: Varda
 스킨케어 화장품 구매 사이트
-
+---
+### 프로젝트 개요
+- 개발 기간: 2023. 04 ~ 2023. 05
+- 개발 인원: 5
+- 개발 언어: Java
+- Framework: Spring boot
+- DB: MyBatis
+- IDE: Eclipse
 ---
 ### 프로젝트 배경
 - 기초케어 화장품만 판매하는 사이트는 존재하지 않음
